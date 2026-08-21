@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -525,10 +526,10 @@
     </div>
 
     <div class="form-card">
-      <form id="regForm" name="curious-lab-registration" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="curious-lab-registration" />
+      <form id="regForm" method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
+        <input type="hidden" name="_subject" value="New Curious Lab registration" />
         <p class="hidden-field">
-          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          <label>Don't fill this out if you're human: <input name="_gotcha" /></label>
         </p>
 
         <div class="field">
@@ -614,27 +615,19 @@
   var formError = document.getElementById('formError');
   var submitBtn = document.getElementById('submitBtn');
 
-  function encode(data) {
-    return Object.keys(data)
-      .map(function (key) { return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]); })
-      .join("&");
-  }
-
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     formError.style.display = 'none';
     submitBtn.disabled = true;
     submitBtn.textContent = 'Confirming…';
 
-    var data = {};
-    new FormData(form).forEach(function (value, key) { data[key] = value; });
-
-    fetch('/', {
+    fetch(form.action, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode(data)
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
     })
-      .then(function () {
+      .then(function (response) {
+        if (!response.ok) throw new Error('submit failed');
         form.style.display = 'none';
         successCard.style.display = 'block';
         successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
