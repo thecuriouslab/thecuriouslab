@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Curious Lab — Creative AI + 3D Printing Workshop for Kids</title>
+<meta name="description" content="Is your child curious enough to build? One Saturday. One real design challenge. One 3D printed idea — made real. 29 August 2026, InnerSpace, Kakkanad." />
+<meta property="og:title" content="The Curious Lab — Is your child curious enough to build?" />
+<meta property="og:description" content="Creative AI + 3D Printing Workshop for Kids. 29 August 2026 · InnerSpace, Kakkanad." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0B2540;
+    --navy-deep: #071A2E;
+    --grid-line: rgba(255,255,255,0.07);
+    --grid-line-strong: rgba(255,255,255,0.14);
+    --paper: #EFEAE0;
+    --paper-dim: #E2DBCB;
+    --ink: #0B2540;
+    --orange: #FF6A1A;
+    --orange-deep: #E0530C;
+    --white: #F7F5EF;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --radius: 4px;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; }
+  button{ font-family: inherit; cursor:pointer; }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position: relative;
+    background: var(--navy);
+    color: var(--white);
+    overflow: hidden;
+    padding: 0 0 64px;
+  }
+  .blueprint-grid{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events:none;
+  }
+  .blueprint-grid::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--grid-line-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line-strong) 1px, transparent 1px);
+    background-size: 160px 160px;
+  }
+
+  .hero-inner{
+    position:relative;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+  }
+
+  .brand-row{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--grid-line-strong);
+  }
+  .brand-mark{
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+  .nozzle-dot{
+    width:8px; height:8px; border-radius:50%;
+    background: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255,106,26,0.22);
+  }
+  .brand-collab{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: rgba(247,245,239,0.6);
+    letter-spacing: 0.06em;
+  }
+
+  .hero-content{
+    padding-top: 56px;
+    max-width: 760px;
+  }
+  .hero-tag{ color: var(--orange); margin-bottom: 18px; }
+
+  .marquee-wrap{ position: relative; display:inline-block; }
+  .marquee-svg{
+    position:absolute;
+    top:-14px; left:-16px; right:-16px; bottom:-10px;
+    width: calc(100% + 32px);
+    height: calc(100% + 24px);
+    pointer-events:none;
+  }
+  .marquee-rect{
+    fill:none;
+    stroke: var(--orange);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 6;
+    stroke-dashoffset: 0;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .marquee-rect{
+      stroke-dasharray: 1400;
+      stroke-dashoffset: 1400;
+      animation: draw-marquee 1.8s ease-out 0.2s forwards;
+    }
+    @keyframes draw-marquee{ to{ stroke-dashoffset: 0; } }
+  }
+
+  h1{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 6vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+  h1 em{
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .hero-sub{
+    margin-top: 26px;
+    font-size: 1.05rem;
+    color: rgba(247,245,239,0.78);
+    max-width: 480px;
+  }
+  .hero-sub strong{ color: var(--white); font-weight: 600; }
+
+  .cta-row{
+    margin-top: 36px;
+    display:flex;
+    align-items:center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .btn-primary{
+    background: var(--orange);
+    color: var(--navy-deep);
+    border: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 15px 28px;
+    border-radius: var(--radius);
+    transition: transform 0.15s ease, background 0.15s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary:hover{ background: #FF7E3B; transform: translateY(-1px); }
+  .btn-primary:focus-visible{ outline: 3px solid var(--white); outline-offset: 3px; }
+
+  .cta-note{
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: rgba(247,245,239,0.55);
+  }
+
+  /* ============ SPEC STRIP ============ */
+  .spec-strip{
+    background: var(--navy-deep);
+    border-top: 1px solid var(--grid-line-strong);
+    border-bottom: 1px solid var(--grid-line-strong);
+  }
+  .spec-grid{
+    max-width: 1040px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .spec-item{
+    padding: 26px 20px;
+    border-left: 1px solid var(--grid-line);
+    color: var(--white);
+  }
+  .spec-item:first-child{ border-left:none; }
+  .spec-label{
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .spec-value{
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+  .spec-value small{
+    display:block;
+    font-size: 0.78rem;
+    color: rgba(247,245,239,0.55);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+  @media (max-width: 860px){
+    .spec-grid{ grid-template-columns: repeat(2, 1fr); }
+    .spec-item:nth-child(3){ border-left:none; }
+  }
+  @media (max-width: 520px){
+    .spec-grid{ grid-template-columns: 1fr; }
+    .spec-item{ border-left:none !important; border-top: 1px solid var(--grid-line); }
+    .spec-item:first-child{ border-top:none; }
+  }
+
+  /* ============ SECTION SHELL ============ */
+  section{ padding: 84px 24px; }
+  .section-inner{ max-width: 1040px; margin: 0 auto; }
+  .section-head{ max-width: 560px; margin-bottom: 52px; }
+  .section-head .eyebrow{ color: var(--orange-deep); margin-bottom: 12px; }
+  .section-head h2{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+    letter-spacing: -0.01em;
+  }
+
+  /* ============ STEPS ============ */
+  .steps{ background: var(--paper); }
+  .steps-list{ display:flex; flex-direction:column; }
+  .step{
+    display:grid;
+    grid-template-columns: 90px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-top: 1px dashed rgba(11,37,64,0.22);
+    align-items: baseline;
+  }
+  .step:last-child{ border-bottom: 1px dashed rgba(11,37,64,0.22); }
+  .step-num{
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--orange-deep);
+    letter-spacing: 0.05em;
+  }
+  .step-num span{
+    display:block;
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    color: var(--ink);
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .step-title{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+  .step-body{
+    color: rgba(11,37,64,0.72);
+    font-size: 0.98rem;
+    max-width: 520px;
+  }
+
+  /* ============ FORM ============ */
+  .register{
+    background: var(--navy);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .register .blueprint-grid{ opacity: 0.6; }
+  .register .section-head .eyebrow{ color: var(--orange); }
+  .register .section-head h2{ color: var(--white); }
+  .register-note{
+    color: rgba(247,245,239,0.65);
+    margin-top: 10px;
+    font-size: 0.95rem;
+  }
+
+  .form-card{
+    position: relative;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 6px;
+    padding: 36px;
+    max-width: 620px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.4);
+  }
+  .form-card::before{
+    content:"";
+    position:absolute;
+    top:12px; left:12px; right:12px; bottom:12px;
+    border: 1px dashed rgba(11,37,64,0.18);
+    border-radius: 4px;
+    pointer-events:none;
+  }
+
+  .field-row{ display:grid; gap: 18px; }
+  .field-row.two-col{ grid-template-columns: 1fr 1fr; }
+  @media (max-width: 520px){ .field-row.two-col{ grid-template-columns: 1fr; } }
+
+  .field{ margin-top: 18px; }
+  .field:first-of-type{ margin-top:0; }
+  .field label{
+    display:block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(11,37,64,0.65);
+    margin-bottom: 7px;
+  }
+  .field label .req{ color: var(--orange-deep); }
+  .field input,
+  .field select{
+    width: 100%;
+    background: var(--white);
+    border: 1.5px solid rgba(11,37,64,0.18);
+    border-radius: var(--radius);
+    padding: 12px 13px;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    color: var(--ink);
+    transition: border-color 0.15s ease;
+  }
+  .field input:focus,
+  .field select:focus{
+    outline: none;
+    border-color: var(--orange-deep);
+  }
+  .field input:focus-visible,
+  .field select:focus-visible{
+    outline: 2px solid var(--orange-deep);
+    outline-offset: 1px;
+  }
+
+  .hidden-field{ position:absolute; left:-9999px; }
+
+  .submit-row{ margin-top: 28px; }
+  .submit-row .btn-primary{ width:100%; justify-content:center; }
+  .form-fineprint{
+    margin-top: 14px;
+    font-size: 0.8rem;
+    color: rgba(11,37,64,0.55);
+    text-align:center;
+  }
+
+  .form-error{
+    display:none;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: #B3261E;
+    font-family: var(--font-mono);
+  }
+
+  /* success state */
+  .success-card{
+    display:none;
+    text-align:center;
+    padding: 20px 4px 6px;
+  }
+  .success-emoji{ font-size: 2.4rem; margin-bottom: 14px; }
+  .success-card h3{
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .success-card p{ color: rgba(11,37,64,0.7); margin-bottom: 4px; }
+  .success-phone{
+    display:inline-block;
+    margin-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--orange-deep);
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background: var(--navy-deep);
+    color: rgba(247,245,239,0.6);
+    padding: 30px 24px;
+  }
+  .footer-inner{
+    max-width: 1040px;
+    margin: 0 auto;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+  }
+  footer a{ color: var(--orange); text-decoration:none; }
+  footer a:hover{ text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="blueprint-grid" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="brand-row">
+      <div class="brand-mark"><span class="nozzle-dot" aria-hidden="true"></span> THE CURIOUS LAB</div>
+      <div class="brand-collab">InnerSpace × The Design Lab</div>
+    </div>
+
+    <div class="hero-content">
+      <p class="eyebrow hero-tag">Creative AI + 3D Printing · August 2026</p>
+      <h1>
+        <span class="marquee-wrap">
+          Is your child curious enough
+          <svg class="marquee-svg" aria-hidden="true"><rect class="marquee-rect" x="1" y="1" width="calc(100% - 2px)" height="calc(100% - 2px)" rx="3"/></svg>
+        </span>
+        to <em>build?</em>
+      </h1>
+      <p class="hero-sub">Every kid watches creators on YouTube for hours. <strong>This Saturday — they become one.</strong> Replacing screen time with curiosity-driven making.</p>
+      <div class="cta-row">
+        <a href="#register" class="btn-primary">Book Your Spot →</a>
+        <span class="cta-note">30 seconds · We'll confirm via WhatsApp</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spec strip -->
+  <div class="spec-strip">
+    <div class="spec-grid">
+      <div class="spec-item">
+        <div class="spec-label">Date</div>
+        <div class="spec-value">29 August 2026<small>Saturday</small></div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">Time</div>
+        <div class="spec-value">10:00 AM<small>to 4:00 PM</small></div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">Venue</div>
+        <div class="spec-value">InnerSpace<small>Kakkanad, Ernakulam</small></div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">Who can join</div>
+        <div class="spec-value">Class 5–8<small>Age 10–14</small></div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">Limited seats</div>
+        <div class="spec-value">Confirm yours<small>before it fills</small></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ WHAT HAPPENS INSIDE ============ -->
+<section class="steps">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow">The workshop</p>
+      <h2>What happens inside</h2>
+    </div>
+    <div class="steps-list">
+      <div class="step">
+        <div class="step-num">01<span>01</span></div>
+        <div>
+          <div class="step-title">The Problem</div>
+          <p class="step-body">A real design challenge. No template. No right answer. Just a question — and their imagination.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02<span>02</span></div>
+        <div>
+          <div class="step-title">The Sketch</div>
+          <p class="step-body">Pencil on paper. Three ideas. They choose one and own it before touching a screen.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03<span>03</span></div>
+        <div>
+          <div class="step-title">The Build</div>
+          <p class="step-body">CAD tools, a 3D printer, and their design. They press print — and wait. Makers learn to wait.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04<span>04</span></div>
+        <div>
+          <div class="step-title">The Moment</div>
+          <p class="step-body">They hold something real. Something that didn't exist that morning. Something only they could have made.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGISTER ============ -->
+<section class="register" id="register">
+  <div class="blueprint-grid" aria-hidden="true"></div>
+  <div class="section-inner" style="position:relative;">
+    <div class="section-head">
+      <p class="eyebrow">Reserve a seat</p>
+      <h2>Book Your Spot</h2>
+      <p class="register-note">Takes 30 seconds. We'll confirm via WhatsApp within 24 hours.</p>
+    </div>
+
+    <div class="form-card">
+      <form id="regForm" name="curious-lab-registration" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="curious-lab-registration" />
+        <p class="hidden-field">
+          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+
+        <div class="field">
+          <label for="parentName">Parent's Name <span class="req">*</span></label>
+          <input type="text" id="parentName" name="parentName" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="childName">Child's Name <span class="req">*</span></label>
+          <input type="text" id="childName" name="childName" required />
+        </div>
+
+        <div class="field-row two-col">
+          <div class="field">
+            <label for="childClass">Class <span class="req">*</span></label>
+            <select id="childClass" name="class" required>
+              <option value="">Select</option>
+              <option>5th Standard</option>
+              <option>6th Standard</option>
+              <option>7th Standard</option>
+              <option>8th Standard</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="childAge">Age <span class="req">*</span></label>
+            <select id="childAge" name="age" required>
+              <option value="">Select</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+              <option>13</option>
+              <option>14</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="whatsapp">WhatsApp Number <span class="req">*</span></label>
+          <input type="tel" id="whatsapp" name="whatsapp" required inputmode="tel" autocomplete="tel" placeholder="+91" />
+        </div>
+
+        <div class="field">
+          <label for="referral">How did you hear about us?</label>
+          <select id="referral" name="referral">
+            <option value="">Select one</option>
+            <option>WhatsApp</option>
+            <option>Instagram</option>
+            <option>Friend or Family</option>
+            <option>Poster</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="submit-row">
+          <button type="submit" class="btn-primary" id="submitBtn">Confirm My Spot →</button>
+        </div>
+        <p class="form-fineprint">We'll confirm your seat within 24 hours on WhatsApp</p>
+        <p class="form-error" id="formError">Something went wrong — please try again, or call us directly.</p>
+      </form>
+
+      <div class="success-card" id="successCard">
+        <div class="success-emoji">🎉</div>
+        <h3>You're in!</h3>
+        <p>We'll confirm your seat on WhatsApp within 24 hours.</p>
+        <p>See you Saturday, 29 August at InnerSpace, Kakkanad.</p>
+        <a class="success-phone" href="tel:+917594061001">📞 Questions? Call 75940 61001</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span>The Curious Lab · 29 Aug 2026</span>
+    <a href="tel:+917594061001">📞 75940 61001</a>
+    <span>InnerSpace, Kakkanad · Ernakulam</span>
+  </div>
+</footer>
+
+<script>
+  var form = document.getElementById('regForm');
+  var successCard = document.getElementById('successCard');
+  var formError = document.getElementById('formError');
+  var submitBtn = document.getElementById('submitBtn');
+
+  function encode(data) {
+    return Object.keys(data)
+      .map(function (key) { return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]); })
+      .join("&");
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    formError.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Confirming…';
+
+    var data = {};
+    new FormData(form).forEach(function (value, key) { data[key] = value; });
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode(data)
+    })
+      .then(function () {
+        form.style.display = 'none';
+        successCard.style.display = 'block';
+        successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(function () {
+        formError.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Confirm My Spot →';
+      });
+  });
+</script>
+
+</body>
+</html>
